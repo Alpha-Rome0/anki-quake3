@@ -502,7 +502,7 @@ void SV_BotInitCvars(void) {
 	Cvar_Get("bot_testclusters", "0", CVAR_CHEAT);		//test the AAS clusters
 	Cvar_Get("bot_fastchat", "0", 0);					//fast chatting bots
 	Cvar_Get("bot_nochat", "0", 0);						//disable chats
-	Cvar_Get("bot_pause", "0", CVAR_CHEAT);				//pause the bots thinking
+	Cvar_Get("bot_pause", "0", 0);				//pause the bots thinking
 	Cvar_Get("bot_report", "0", CVAR_CHEAT);			//get a full report in ctf
 	Cvar_Get("bot_grapple", "0", 0);					//enable grapple
 	Cvar_Get("bot_rocketjump", "1", 0);					//enable rocket jumping
