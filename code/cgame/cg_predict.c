@@ -260,6 +260,11 @@ CG_TouchItem
 */
 static void CG_TouchItem( centity_t *cent ) {
 	gitem_t		*item;
+	
+	// CG_Printf("CG_TouchItem\n"); 
+	
+	// player cannot pick up items
+	return;
 
 	if ( !cg_predictItems.integer ) {
 		return;
@@ -331,6 +336,7 @@ static void CG_TouchTriggerPrediction( void ) {
 	centity_t	*cent;
 	qboolean	spectator;
 
+	
 	// dead clients don't activate triggers
 	if ( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) {
 		return;
