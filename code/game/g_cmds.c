@@ -244,10 +244,6 @@ void Cmd_Give_f (gentity_t *ent)
 	gentity_t		*it_ent;
 	trace_t		trace;
 
-	if ( !CheatsOk( ent ) ) {
-		return;
-	}
-
 	name = ConcatArgs( 1 );
 
 	if (Q_stricmp(name, "all") == 0)
@@ -279,6 +275,12 @@ void Cmd_Give_f (gentity_t *ent)
 			return;
 	}
 
+	if (Q_stricmp(name, "ammorail5") == 0)
+	{
+		ent->client->ps.ammo[WP_RAILGUN] += 5;
+		return;
+	}
+	
 	if (give_all || Q_stricmp(name, "armor") == 0)
 	{
 		ent->client->ps.stats[STAT_ARMOR] = 200;
