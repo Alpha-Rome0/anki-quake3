@@ -2316,16 +2316,10 @@ static void CG_DrawAnkiCountdown( void ) {
 	
 	if( cg_ankiCountdown.integer > 0 )
 	{
-		/*
-		Com_sprintf(s, sizeof(s), "%d", cg_ankiCountdown.integer);
-		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
-		CG_DrawBigString(320 - w / 2, 64, s, 1.0F);
-		*/
-		
 		#ifndef MISSIONPACK
-		CG_DrawField ( 320 - 15, 200, 5, cg_ankiCountdown.integer);
+		CG_DrawField ( 160, 150, 5, cg_ankiCountdown.integer);
 		w = CG_DrawStrlen( "reviews remaining" ) * BIGCHAR_WIDTH;
-		CG_DrawBigString(320 - w / 2, 250, "reviews remaining", 1.0F);
+		CG_DrawBigString(320 - w / 2, 200, "reviews remaining", 1.0F);
 		#endif
 	}
 }

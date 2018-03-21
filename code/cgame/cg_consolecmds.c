@@ -417,6 +417,9 @@ static void CG_AnkiDecrement( void) {
 	}
 }
 
+static void CG_AnkiIncrement( void) {
+	trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + 5)));
+}
 
 /*
 ==================
@@ -513,6 +516,7 @@ static consoleCommand_t	commands[] = {
 	//{ "camera", CG_Camera_f },
 	{ "loaddeferred", CG_LoadDeferredPlayers },
 	{ "anki_decrement", CG_AnkiDecrement },
+	{ "anki_increment", CG_AnkiIncrement },
 };
 
 
