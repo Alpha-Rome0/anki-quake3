@@ -275,11 +275,23 @@ void Cmd_Give_f (gentity_t *ent)
 			return;
 	}
 
-	if (Q_stricmp(name, "ammorail5") == 0)
+	if (Q_stricmp(name, "ammorail") == 0)
 	{
 		ent->client->ps.ammo[WP_RAILGUN] += 5;
 		return;
 	}
+	
+	if (Q_stricmp(name, "ammorocket") == 0)
+	{
+		ent->client->ps.ammo[WP_ROCKET_LAUNCHER] += 10;
+		return;
+	}	
+	
+	if (Q_stricmp(name, "quad") == 0)
+	{
+		ent->client->ps.powerups[PW_QUAD] = 30*1000;
+		return;
+	}	
 	
 	if (give_all || Q_stricmp(name, "armor") == 0)
 	{

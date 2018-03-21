@@ -1178,8 +1178,10 @@ void ClientSpawn(gentity_t *ent) {
 	// if the player is a human, he only gets a railgun and 5 slugs
 	if( ( ent->r.svFlags & SVF_BOT ) == 0)
 	{
-		client->ps.stats[STAT_WEAPONS] = (1 << WP_RAILGUN ); 
-		client->ps.ammo[WP_RAILGUN] = 5; 	
+		client->ps.stats[STAT_WEAPONS] = (1 << WP_RAILGUN | 1 << WP_ROCKET_LAUNCHER ); 
+		// don't give player any ammo to begin with
+		//client->ps.ammo[WP_RAILGUN] = 5; 	
+		//client->ps.ammo[WP_ROCKET_LAUNCHER] = 10; 
 	}
 	
 	// health will count down towards max_health
