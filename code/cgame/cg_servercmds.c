@@ -1070,6 +1070,7 @@ static void CG_ServerCommand( void ) {
 		return;
 	}
 
+
 	if ( Q_stricmp (cmd, "remapShader") == 0 )
 	{
 		if (trap_Argc() == 4)

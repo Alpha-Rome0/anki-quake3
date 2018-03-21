@@ -2305,6 +2305,31 @@ static void CG_DrawAmmoWarning( void ) {
 }
 
 
+/*
+=================
+CG_DrawAnkiCountdown
+=================
+*/
+static void CG_DrawAnkiCountdown( void ) {
+	// char s[25];
+	int w;
+	
+	if( cg_ankiCountdown.integer > 0 )
+	{
+		/*
+		Com_sprintf(s, sizeof(s), "%d", cg_ankiCountdown.integer);
+		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
+		CG_DrawBigString(320 - w / 2, 64, s, 1.0F);
+		*/
+		
+		#ifndef MISSIONPACK
+		CG_DrawField ( 320 - 15, 200, 5, cg_ankiCountdown.integer);
+		w = CG_DrawStrlen( "reviews remaining" ) * BIGCHAR_WIDTH;
+		CG_DrawBigString(320 - w / 2, 250, "reviews remaining", 1.0F);
+		#endif
+	}
+}
+
 #ifdef MISSIONPACK
 /*
 =================
@@ -2581,6 +2606,8 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 			//CG_DrawPersistantPowerup();
 #endif
 			CG_DrawReward();
+			
+			CG_DrawAnkiCountdown();
 		}
 	}
 

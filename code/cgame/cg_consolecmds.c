@@ -407,6 +407,17 @@ static void CG_EditHud_f( void ) {
 
 #endif
 
+static void CG_AnkiDecrement( void) {
+	int current_val;
+	
+	current_val = cg_ankiCountdown.integer;
+	if( current_val > 0 )
+	{
+		trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(current_val - 1)));
+	}
+}
+
+
 /*
 ==================
 CG_StartOrbit_f
@@ -500,7 +511,8 @@ static consoleCommand_t	commands[] = {
 #endif
 	{ "startOrbit", CG_StartOrbit_f },
 	//{ "camera", CG_Camera_f },
-	{ "loaddeferred", CG_LoadDeferredPlayers }	
+	{ "loaddeferred", CG_LoadDeferredPlayers },
+	{ "anki_decrement", CG_AnkiDecrement },
 };
 
 
@@ -580,4 +592,5 @@ void CG_InitConsoleCommands( void ) {
 	trap_AddCommand ("stats");
 	trap_AddCommand ("teamtask");
 	trap_AddCommand ("loaddefered");	// spelled wrong, but not changing for demo
+	trap_AddCommand ("anki_decrement");
 }

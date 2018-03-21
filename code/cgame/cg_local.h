@@ -1191,6 +1191,8 @@ extern  vmCvar_t		cg_recordSPDemoName;
 extern	vmCvar_t		cg_obeliskRespawnDelay;
 #endif
 
+extern  vmCvar_t        cg_ankiCountdown;
+
 //
 // cg_main.c
 //
