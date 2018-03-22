@@ -984,6 +984,8 @@ typedef struct {
 	
 	sfxHandle_t ammoPickup;
 	sfxHandle_t weaponPickup;
+	
+	sfxHandle_t menuBuzzSound;
 
 } cgMedia_t;
 
@@ -1195,6 +1197,18 @@ extern	vmCvar_t		cg_obeliskRespawnDelay;
 #endif
 
 extern  vmCvar_t        cg_ankiCountdown;
+
+extern  vmCvar_t        cg_railSlugRequested; // number of rail slug reloads requested
+extern  vmCvar_t        cg_rocketsRequested;  // number of rocket reloads requested
+extern  vmCvar_t        cg_healthRequested;   // whether health has been requested (0 or 1)
+extern  vmCvar_t        cg_armorRequested;    // whether armor has been requested (0 or 1)
+extern  vmCvar_t        cg_quadRequested;     // whether the quad has been requested (0 or 1)
+
+extern  vmCvar_t        cg_railSlugReviewCost; // number of reviews required to get a pack of slugs
+extern  vmCvar_t        cg_rocketsReviewCost;  // number of reviews required to get a pack of rockets
+extern  vmCvar_t        cg_healthReviewCost;  // number of reviews required to get health
+extern  vmCvar_t        cg_armorReviewCost;  // number of reviews required to get armor
+extern  vmCvar_t        cg_quadReviewCost;  // number of reviews required to get the quad
 
 //
 // cg_main.c

@@ -202,6 +202,17 @@ vmCvar_t	cg_obeliskRespawnDelay;
 
 vmCvar_t    cg_ankiCountdown;
 
+vmCvar_t cg_railSlugRequested;
+vmCvar_t cg_rocketsRequested;
+vmCvar_t cg_healthRequested;
+vmCvar_t cg_armorRequested;
+vmCvar_t cg_quadRequested;
+vmCvar_t cg_railSlugReviewCost;
+vmCvar_t cg_rocketsReviewCost;
+vmCvar_t cg_healthReviewCost;
+vmCvar_t cg_armorReviewCost;
+vmCvar_t cg_quadReviewCost;
+
 typedef struct {
 	vmCvar_t	*vmCvar;
 	char		*cvarName;
@@ -324,7 +335,24 @@ static cvarTable_t cvarTable[] = {
 	{ &cg_oldPlasma, "cg_oldPlasma", "1", CVAR_ARCHIVE},
 	{ &cg_trueLightning, "cg_trueLightning", "0.0", CVAR_ARCHIVE},
 //	{ &cg_pmove_fixed, "cg_pmove_fixed", "0", CVAR_USERINFO | CVAR_ARCHIVE }
-	{ &cg_ankiCountdown, "cg_ankiCountdown", "0", 0}
+	
+	// anki gamification variables
+	{ &cg_ankiCountdown, "cg_ankiCountdown", "0", 0},
+	
+	{ &cg_railSlugRequested, "cg_railSlugRequested", "0", 0},
+	{ &cg_rocketsRequested, "cg_rocketsRequested", "0", 0},
+	{ &cg_healthRequested, "cg_healthRequested", "0", 0},
+	{ &cg_armorRequested, "cg_armorRequested", "0", 0},
+	{ &cg_quadRequested, "cg_quadRequested", "0", 0},
+	
+	{ &cg_railSlugReviewCost, "cg_railSlugReviewCost", "5", 0},
+	{ &cg_rocketsReviewCost, "cg_rocketsReviewCost", "5", 0},
+	{ &cg_healthReviewCost, "cg_healthReviewCost", "5", 0},
+	{ &cg_armorReviewCost, "cg_armorReviewCost", "5", 0},
+	{ &cg_quadReviewCost, "cg_quadReviewCost", "5", 0},
+	
+	
+	
 };
 
 static int  cvarTableSize = ARRAY_LEN( cvarTable );
@@ -685,6 +713,8 @@ static void CG_RegisterSounds( void ) {
 	
 	cgs.media.ammoPickup = trap_S_RegisterSound ("sound/misc/am_pkup.wav", qfalse );
 	cgs.media.weaponPickup = trap_S_RegisterSound ("sound/misc/w_pkup.wav", qfalse );
+	
+	cgs.media.menuBuzzSound = trap_S_RegisterSound ("sound/misc/menu4.wav", qfalse );
 
 	for (i=0 ; i<4 ; i++) {
 		Com_sprintf (name, sizeof(name), "sound/player/footsteps/step%i.wav", i+1);
