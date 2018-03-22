@@ -981,6 +981,9 @@ typedef struct {
 	sfxHandle_t	wstbimpmSound;
 	sfxHandle_t	wstbimpdSound;
 	sfxHandle_t	wstbactvSound;
+	
+	sfxHandle_t ammoPickup;
+	sfxHandle_t weaponPickup;
 
 } cgMedia_t;
 

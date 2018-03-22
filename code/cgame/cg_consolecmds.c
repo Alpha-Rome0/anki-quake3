@@ -414,10 +414,19 @@ static void CG_AnkiDecrement( void) {
 	if( current_val > 0 )
 	{
 		trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(current_val - 1)));
+		if( current_val == 1 )
+		{	
+			// play quad sound to notify player reviews are done
+			CG_AddBufferedSound(cgs.media.quadSound);
+		} else {
+			// sound feedback for review
+			CG_AddBufferedSound(cgs.media.ammoPickup);
+		}
 	}
 }
 
 static void CG_AnkiIncrement( void) {
+	CG_AddBufferedSound(cgs.media.ammoPickup);
 	trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + 5)));
 }
 

@@ -682,6 +682,9 @@ static void CG_RegisterSounds( void ) {
 	cgs.media.watrUnSound = trap_S_RegisterSound( "sound/player/watr_un.wav", qfalse);
 
 	cgs.media.jumpPadSound = trap_S_RegisterSound ("sound/world/jumppad.wav", qfalse );
+	
+	cgs.media.ammoPickup = trap_S_RegisterSound ("sound/misc/am_pkup.wav", qfalse );
+	cgs.media.weaponPickup = trap_S_RegisterSound ("sound/misc/w_pkup.wav", qfalse );
 
 	for (i=0 ; i<4 ; i++) {
 		Com_sprintf (name, sizeof(name), "sound/player/footsteps/step%i.wav", i+1);
