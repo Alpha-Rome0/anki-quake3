@@ -474,8 +474,8 @@ static void CG_AnkiDecrement( void) {
 		{
 			// play quad sound to notify player reviews are done
 			CG_AddBufferedSound(cgs.media.quadSound);			
-			// unpause bots!
-			trap_SendConsoleCommand("bot_pause 0\n");
+			// don't unpause bots, let user do it himself
+			//trap_SendConsoleCommand("bot_pause 0\n");
 		}
 		
 		
