@@ -2313,15 +2313,27 @@ CG_DrawAnkiCountdown
 static void CG_DrawAnkiCountdown( void ) {
 	// char s[25];
 	int w;
-	
-	if( cg_ankiCountdown.integer > 0 )
+
+	#ifndef MISSIONPACK	
+	if( cg_local_ankiReviewsTodo > 0 )
 	{
-		#ifndef MISSIONPACK
-		CG_DrawField ( 160, 150, 5, cg_ankiCountdown.integer);
+		CG_DrawField ( 160, 150, 5, cg_local_ankiReviewsTodo);
 		w = CG_DrawStrlen( "reviews remaining" ) * BIGCHAR_WIDTH;
 		CG_DrawBigString(320 - w / 2, 200, "reviews remaining", 1.0F);
-		#endif
 	}
+	if( cg_local_railSlugRequested > 0 )
+	{
+		CG_DrawField ( 100, 260, 5, cg_local_railSlugRequested);
+	}
+	if( cg_local_rocketsRequested > 0 )
+	{
+		CG_DrawField ( 250, 260, 5, cg_local_rocketsRequested);
+	}			
+	if( cg_local_ankiReviewsDone > 0 )
+	{
+		CG_DrawField ( 250, 280, 5, cg_local_ankiReviewsDone);
+	}			
+	#endif
 }
 
 #ifdef MISSIONPACK

@@ -408,55 +408,61 @@ static void CG_EditHud_f( void ) {
 #endif
 
 static void CG_AnkiDecrement( void) {
-	int new_val;
-	int total_required;
-	int diff;
+	//int total_required;
+	//int diff;
 	
-	if( cg_ankiCountdown.integer > 0 )
+	if( cg_local_ankiReviewsTodo > 0 )
 	{
-		total_required = cg_railSlugRequested.integer * cg_railSlugReviewCost.integer +
-		                 cg_rocketsRequested.integer * cg_rocketsReviewCost.integer + 
+		cg_local_ankiReviewsTodo--;
+		cg_local_ankiReviewsDone++;
+		
+		/*
+		total_required = cg_local_railSlugRequested * cg_railSlugReviewCost.integer +
+		                 cg_local_rocketsRequested * cg_rocketsReviewCost.integer + 
 						 cg_healthRequested.integer * cg_healthReviewCost.integer + 
 						 cg_armorRequested.integer *  cg_armorReviewCost.integer + 
 						 cg_quadRequested.integer * cg_quadReviewCost.integer;
+		*/
 						 
 		// decrement anki countdown
-		new_val = cg_ankiCountdown.integer - 1;
-		trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(new_val)));
 		
-		diff = total_required - new_val;
+		//cg_local_ankiCountdown--;
+		//diff = total_required - cg_local_ankiCountdown;
 		
 		// play sound
 		CG_AddBufferedSound(cgs.media.ammoPickup);
 		
 		// do we have enough diff to credit some items ?
 		
-		if( cg_railSlugRequested.integer > 0 && diff >= cg_railSlugRequested.integer * cg_railSlugReviewCost.integer )
+		if( cg_local_railSlugRequested > 0 && cg_local_ankiReviewsDone >= cg_railSlugReviewCost.integer )
 		{
 			// credit some rail slugs
 			CG_Printf("Giving you Rail Slugs\n");
 			trap_SendConsoleCommand("give ammorail\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
-			trap_Cvar_Set( "cg_railSlugRequested", va("%i",(int)(cg_railSlugRequested.integer - 1)));
-			diff -= cg_railSlugRequested.integer * cg_railSlugReviewCost.integer;
+			cg_local_railSlugRequested--;
+			cg_local_ankiReviewsDone -= cg_railSlugReviewCost.integer;
 		}
 		
-		if( cg_rocketsRequested.integer > 0 && diff >= cg_rocketsRequested.integer * cg_rocketsReviewCost.integer )
+		
+		if( cg_local_rocketsRequested > 0 && cg_local_ankiReviewsDone >= cg_rocketsReviewCost.integer )
 		{
 			// credit some rail slugs
 			CG_Printf("Giving you Rockets\n");
 			trap_SendConsoleCommand("give ammorocket\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
-			trap_Cvar_Set( "cg_rocketsRequested", va("%i",(int)(cg_rocketsRequested.integer - 1)));
-			diff -= cg_rocketsRequested.integer * cg_rocketsReviewCost.integer;
+			cg_local_rocketsRequested--;
+			cg_local_ankiReviewsDone -= cg_rocketsReviewCost.integer;
 		}		
-
+	
+		/*
 		if( cg_healthRequested.integer > 0 && diff >= cg_healthRequested.integer * cg_healthReviewCost.integer )
 		{
 			// credit health
 			CG_Printf("Giving you Health\n");
 			trap_SendConsoleCommand("give health\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
+			cg_healthRequested.integer = 0;
 			trap_Cvar_Set( "cg_healthRequested", "0");
 			diff -= cg_healthRequested.integer * cg_healthReviewCost.integer;
 		}		
@@ -467,6 +473,7 @@ static void CG_AnkiDecrement( void) {
 			CG_Printf("Giving you Armor\n");
 			trap_SendConsoleCommand("give armor\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
+			cg_armorRequested.integer = 0;
 			trap_Cvar_Set( "cg_armorRequested", "0");
 			diff -= cg_armorRequested.integer * cg_armorReviewCost.integer;
 		}				
@@ -477,11 +484,13 @@ static void CG_AnkiDecrement( void) {
 			CG_Printf("Giving you Quad\n");
 			trap_SendConsoleCommand("give quad\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
+			cg_quadRequested.integer = 0;
 			trap_Cvar_Set( "cg_quadRequested", "0");
 			diff -= cg_quadRequested.integer * cg_quadReviewCost.integer;
 		}						
+		*/
 		
-		if( new_val == 0 )
+		if( cg_local_ankiReviewsTodo == 0 )
 		{
 			// play quad sound to notify player reviews are done
 			CG_AddBufferedSound(cgs.media.quadSound);			
@@ -510,24 +519,26 @@ static void CG_AnkiDecrement( void) {
 	*/
 }
 
+/*
 static void CG_AnkiIncrement( void) {
 	CG_AddBufferedSound(cgs.media.ammoPickup);
 	trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + 5)));
 }
+*/
 
 
 static void CG_RequestRail( void ) {
 	CG_Printf("Requesting Rail Slugs\n");
-	trap_Cvar_Set( "cg_railSlugRequested", va("%i",(int)(cg_railSlugRequested.integer + 1)));
-	trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + cg_railSlugReviewCost.integer)));
+	cg_local_railSlugRequested++;
+	cg_local_ankiReviewsTodo += cg_railSlugReviewCost.integer;
 	CG_AddBufferedSound(cgs.media.menuBuzzSound);
 	trap_SendConsoleCommand("bot_pause 1");
 }
 
 static void CG_RequestRockets( void ) {
 	CG_Printf("Requesting Rockets\n");
-	trap_Cvar_Set( "cg_rocketsRequested", va("%i",(int)(cg_rocketsRequested.integer + 1)));
-	trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + cg_rocketsReviewCost.integer)));
+	cg_local_rocketsRequested++;
+	cg_local_ankiReviewsTodo += cg_rocketsReviewCost.integer;
 	CG_AddBufferedSound(cgs.media.menuBuzzSound);
 	trap_SendConsoleCommand("bot_pause 1");
 }
@@ -537,7 +548,7 @@ static void CG_RequestHealth( void ) {
 	{
 		CG_Printf("Requesting Health\n");
 		trap_Cvar_Set( "cg_healthRequested", "1");
-		trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + cg_healthReviewCost.integer)));
+		//trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + cg_healthReviewCost.integer)));
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1");
 	}
@@ -548,7 +559,7 @@ static void CG_RequestArmor( void ) {
 	{
 		CG_Printf("Requesting Armor\n");
 		trap_Cvar_Set( "cg_armorRequested", "1");
-		trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + cg_armorReviewCost.integer)));
+		//trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + cg_armorReviewCost.integer)));
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1");
 	}
@@ -559,7 +570,7 @@ static void CG_RequestQuad( void ) {
 	{
 		CG_Printf("Requesting Quad\n");
 		trap_Cvar_Set( "cg_quadRequested", "1");
-		trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + cg_quadReviewCost.integer)));
+		//trap_Cvar_Set( "cg_ankiCountdown", va("%i",(int)(cg_ankiCountdown.integer + cg_quadReviewCost.integer)));
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1");
 	}
@@ -660,7 +671,6 @@ static consoleCommand_t	commands[] = {
 	//{ "camera", CG_Camera_f },
 	{ "loaddeferred", CG_LoadDeferredPlayers },
 	{ "anki_decrement", CG_AnkiDecrement },
-	{ "anki_increment", CG_AnkiIncrement },
 	
 	{ "request_rail", CG_RequestRail },
 	{ "request_rockets", CG_RequestRockets },
