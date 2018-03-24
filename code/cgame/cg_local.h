@@ -691,6 +691,7 @@ typedef struct {
 
 	qhandle_t	armorModel;
 	qhandle_t	armorIcon;
+	qhandle_t   medkitIcon;
 
 	qhandle_t	teamStatusBar;
 

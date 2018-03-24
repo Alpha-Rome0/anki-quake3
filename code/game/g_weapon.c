@@ -450,6 +450,12 @@ void weapon_railgun_fire (gentity_t *ent) {
 	gentity_t	*unlinkedEntities[MAX_RAIL_HITS];
 
 	damage = 100 * s_quadFactor;
+	
+	if( ( ent->r.svFlags & SVF_BOT ) == 0)
+	{
+		// make railgun more powerful
+		damage = 200 * s_quadFactor;
+	}	
 
 	VectorMA (muzzle, 8192, forward, end);
 

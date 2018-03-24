@@ -2330,6 +2330,14 @@ static void CG_DrawAnkiCountdown( void ) {
 		CG_DrawField ( 250, 260, 5, cg_local_rocketsRequested);
 		CG_DrawPic( 320, 260, ICON_SIZE, ICON_SIZE, cg_weapons[ WP_ROCKET_LAUNCHER ].ammoIcon );
 	}			
+	if( cg_local_healthRequested == 1 )
+	{
+		CG_DrawPic( 190, 320, ICON_SIZE, ICON_SIZE, cgs.media.medkitIcon );
+	}
+	if( cg_local_armorRequested == 1 )
+	{
+		CG_DrawPic( 340, 320, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
+	}
 	#endif
 }
 
