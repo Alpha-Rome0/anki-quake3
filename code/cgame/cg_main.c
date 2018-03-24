@@ -200,13 +200,6 @@ vmCvar_t	cg_recordSPDemoName;
 vmCvar_t	cg_obeliskRespawnDelay;
 #endif
 
-// vmCvar_t    cg_ankiCountdown;
-
-//vmCvar_t cg_railSlugRequested;
-// vmCvar_t cg_rocketsRequested;
-vmCvar_t cg_healthRequested;
-vmCvar_t cg_armorRequested;
-vmCvar_t cg_quadRequested;
 vmCvar_t cg_railSlugReviewCost;
 vmCvar_t cg_rocketsReviewCost;
 vmCvar_t cg_healthReviewCost;
@@ -215,8 +208,12 @@ vmCvar_t cg_quadReviewCost;
 
 int cg_local_ankiReviewsTodo;
 int cg_local_ankiReviewsDone;
+
 int cg_local_railSlugRequested;
 int cg_local_rocketsRequested;
+int cg_local_healthRequested;
+int cg_local_armorRequested;
+int cg_local_quadRequested;
 
 typedef struct {
 	vmCvar_t	*vmCvar;
@@ -341,15 +338,7 @@ static cvarTable_t cvarTable[] = {
 	{ &cg_trueLightning, "cg_trueLightning", "0.0", CVAR_ARCHIVE},
 //	{ &cg_pmove_fixed, "cg_pmove_fixed", "0", CVAR_USERINFO | CVAR_ARCHIVE }
 	
-	// anki gamification variables
-	//{ &cg_ankiCountdown, "cg_ankiCountdown", "0", 0},
-	
-	//{ &cg_railSlugRequested, "cg_railSlugRequested", "0", 0},
-	//{ &cg_rocketsRequested, "cg_rocketsRequested", "0", 0},
-	{ &cg_healthRequested, "cg_healthRequested", "0", 0},
-	{ &cg_armorRequested, "cg_armorRequested", "0", 0},
-	{ &cg_quadRequested, "cg_quadRequested", "0", 0},
-	
+
 	{ &cg_railSlugReviewCost, "cg_railSlugReviewCost", "5", 0},
 	{ &cg_rocketsReviewCost, "cg_rocketsReviewCost", "5", 0},
 	{ &cg_healthReviewCost, "cg_healthReviewCost", "5", 0},
@@ -1898,6 +1887,9 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 	cg_local_ankiReviewsDone = 0;
 	cg_local_railSlugRequested = 0;
 	cg_local_rocketsRequested = 0;
+	cg_local_healthRequested = 0;
+	cg_local_armorRequested = 0;
+	cg_local_quadRequested = 0;	
 	
 	cg.clientNum = clientNum;
 

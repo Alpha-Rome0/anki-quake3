@@ -2329,10 +2329,6 @@ static void CG_DrawAnkiCountdown( void ) {
 	{
 		CG_DrawField ( 250, 260, 5, cg_local_rocketsRequested);
 	}			
-	if( cg_local_ankiReviewsDone > 0 )
-	{
-		CG_DrawField ( 250, 280, 5, cg_local_ankiReviewsDone);
-	}			
 	#endif
 }
 
