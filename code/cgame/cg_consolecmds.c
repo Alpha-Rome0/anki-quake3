@@ -483,6 +483,10 @@ static void CG_AnkiDecrement( void) {
 	
 }
 
+static void CG_PublishAnkiReviewCount( void )
+{
+	trap_CIN_Anki_ReviewCount( cg_local_ankiReviewsTodo );
+}
 
 
 static void CG_RequestRail( void ) {
@@ -491,6 +495,7 @@ static void CG_RequestRail( void ) {
 	cg_local_ankiReviewsTodo += cg_railSlugReviewCost.integer;
 	CG_AddBufferedSound(cgs.media.menuBuzzSound);
 	trap_SendConsoleCommand("bot_pause 1\n");
+	CG_PublishAnkiReviewCount();
 }
 
 static void CG_RequestRockets( void ) {

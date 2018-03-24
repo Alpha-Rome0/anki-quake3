@@ -1671,6 +1671,8 @@ void		trap_Key_SetCatcher( int catcher );
 int			trap_Key_GetKey( const char *binding );
 
 
+void trap_CIN_Anki_ReviewCount( int reviewCount );
+
 typedef enum {
   SYSTEM_PRINT,
   CHAT_PRINT,

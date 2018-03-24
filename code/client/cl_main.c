@@ -4646,6 +4646,11 @@ void CL_ShowIP_f(void) {
 	Sys_ShowIP();
 }
 
+void CL_AnkiPublishReviewCount( void ) 
+{
+	Com_Printf("CL_AnkiPublishReviewCount\n");
+}
+
 /*
 =================
 CL_CDKeyValidate

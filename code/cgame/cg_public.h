@@ -182,7 +182,9 @@ typedef enum {
 	CG_CEIL,
 	CG_TESTPRINTINT,
 	CG_TESTPRINTFLOAT,
-	CG_ACOS
+	CG_ACOS,
+	
+	CG_CIN_ANKI_REVIEWCOUNT
 } cgameImport_t;
 
 
