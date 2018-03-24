@@ -487,6 +487,8 @@ int CL_ServerStatus( char *serverAddress, char *serverStatusString, int maxLen )
 
 qboolean CL_CheckPaused(void);
 
+
+
 //
 // cl_input
 //

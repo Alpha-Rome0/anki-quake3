@@ -1234,6 +1234,7 @@ void CG_RankRunFrame( void );
 void CG_SetScoreSelection(void *menu);
 score_t *CG_GetSelectedScore( void );
 void CG_BuildSpectatorString( void );
+void CG_AnkiReview( void );
 
 
 //

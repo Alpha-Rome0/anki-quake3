@@ -1630,6 +1630,22 @@ void NET_Event(fd_set *fdr)
 
 		if(NET_GetPacket(&from, &netmsg, fdr))
 		{
+			Com_Printf("NET_Event cursize %u\n", netmsg.cursize);		
+			
+			if ( netmsg.cursize >= 4 && *(int *)netmsg.data == -1 ) {
+				Com_Printf("*** Found message with leading -1\n");
+				
+				if( netmsg.cursize >= 15 )
+				{
+					if( strncmp( (char *) netmsg.data + 4, "anki_review", 11 ) == 0)
+					{
+						Com_Printf("*** NET_Event Anki Review\n");
+						CL_TriggerAnkiReview();
+					}
+					return;
+				}
+			}					
+			
 			if(net_dropsim->value > 0.0f && net_dropsim->value <= 100.0f)
 			{
 				// com_dropsim->value percent of incoming packets get dropped.

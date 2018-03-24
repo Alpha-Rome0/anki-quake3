@@ -74,6 +74,9 @@ Q_EXPORT intptr_t vmMain( int command, int arg0, int arg1, int arg2, int arg3, i
 	case CG_EVENT_HANDLING:
 		CG_EventHandling(arg0);
 		return 0;
+	case CG_ANKI_REVIEW:
+		CG_AnkiReview();
+		return 0;
 	default:
 		CG_Error( "vmMain: unknown command %i", command );
 		break;
@@ -2022,3 +2025,9 @@ void CG_MouseEvent(int x, int y) {
 }
 #endif
 
+
+void CG_AnkiReview()
+{
+	CG_Printf("CG_AnkiReview\n");
+	trap_SendConsoleCommand("anki_decrement\n");
+}

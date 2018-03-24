@@ -2591,7 +2591,7 @@ void CL_ConnectionlessPacket( netadr_t from, msg_t *msg ) {
 	char	*s;
 	char	*c;
 	int challenge = 0;
-
+	
 	MSG_BeginReadingOOB( msg );
 	MSG_ReadLong( msg );	// skip the -1
 
@@ -2602,7 +2602,8 @@ void CL_ConnectionlessPacket( netadr_t from, msg_t *msg ) {
 	c = Cmd_Argv(0);
 
 	Com_DPrintf ("CL packet %s: %s\n", NET_AdrToStringwPort(from), c);
-
+	
+	
 	// challenge from the server we are connecting to
 	if (!Q_stricmp(c, "challengeResponse"))
 	{
@@ -2796,6 +2797,12 @@ void CL_ConnectionlessPacket( netadr_t from, msg_t *msg ) {
 	Com_DPrintf ("Unknown connectionless packet command.\n");
 }
 
+void CL_TriggerAnkiReview( void )
+{
+	Com_Printf("*** Anki Review\n");
+	if( cgvm != 0)
+		VM_Call( cgvm, CG_ANKI_REVIEW);	
+}
 
 /*
 =================

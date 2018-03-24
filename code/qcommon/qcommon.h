@@ -997,6 +997,8 @@ void CL_JoystickEvent( int axis, int value, int time );
 
 void CL_PacketEvent( netadr_t from, msg_t *msg );
 
+void CL_TriggerAnkiReview( void );
+
 void CL_ConsolePrint( char *text );
 
 void CL_MapLoading( void );
