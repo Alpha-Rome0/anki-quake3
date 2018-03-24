@@ -869,6 +869,8 @@ SOCKET NET_IPSocket( char *net_interface, int port, int *err ) {
 		closesocket( newsocket );
 		return INVALID_SOCKET;
 	}
+	
+	Com_Printf("Socket binding done\n");
 
 	return newsocket;
 }
@@ -1695,7 +1697,10 @@ void NET_Sleep(int msec)
 	if(retval == SOCKET_ERROR)
 		Com_Printf("Warning: select() syscall failed: %s\n", NET_ErrorString());
 	else if(retval > 0)
+	{
+		Com_Printf("*** calling NET_Event\n");
 		NET_Event(&fdr);
+	}
 }
 
 /*
