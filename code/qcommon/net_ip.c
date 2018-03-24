@@ -674,13 +674,18 @@ void Sys_SendPacket( int length, const void *data, netadr_t to ) {
 	}
 	else {
 		if(addr.ss_family == AF_INET)
+		{
 			ret = sendto( ip_socket, data, length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in) );
+			Com_Printf("*** Sent packet ret %d length %d data [%s]\n", ret, length, data);
+		}
 		else if(addr.ss_family == AF_INET6)
 			ret = sendto( ip6_socket, data, length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in6) );
 	}
 	if( ret == SOCKET_ERROR ) {
 		int err = socketError;
 
+		Com_Printf( "** Sys_SendPacket: %s\n", NET_ErrorString() );
+		
 		// wouldblock is silent
 		if( err == EAGAIN ) {
 			return;
