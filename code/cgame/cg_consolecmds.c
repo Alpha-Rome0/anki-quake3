@@ -464,7 +464,7 @@ static void CG_AnkiDecrement( void) {
 		{
 			// credit quad
 			CG_Printf("Giving you quad\n");
-			trap_SendConsoleCommand("give quad\n");
+			trap_SendConsoleCommand("give quad damage\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
 			cg_local_quadRequested = 0;
 			cg_local_ankiReviewsDone -= cg_quadReviewCost.integer;			

@@ -287,11 +287,15 @@ void Cmd_Give_f (gentity_t *ent)
 		return;
 	}	
 	
+	/*
 	if (Q_stricmp(name, "quad") == 0)
 	{
-		ent->client->ps.powerups[PW_QUAD] = 30*1000;
+		G_Printf("adding quad powerup\n");
+		// ent->client->ps.powerups[PW_QUAD] = 30*1000;
+		ent->client->ps.powerups[PW_QUAD] = level.time - ( level.time % 1000 );
 		return;
-	}	
+	}
+	*/
 	
 	if (give_all || Q_stricmp(name, "armor") == 0)
 	{

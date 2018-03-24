@@ -2311,7 +2311,6 @@ CG_DrawAnkiCountdown
 =================
 */
 static void CG_DrawAnkiCountdown( void ) {
-	// char s[25];
 	int w;
 
 	#ifndef MISSIONPACK	
@@ -2324,10 +2323,12 @@ static void CG_DrawAnkiCountdown( void ) {
 	if( cg_local_railSlugRequested > 0 )
 	{
 		CG_DrawField ( 100, 260, 5, cg_local_railSlugRequested);
+		CG_DrawPic( 170, 260, ICON_SIZE, ICON_SIZE, cg_weapons[ WP_RAILGUN ].ammoIcon );
 	}
 	if( cg_local_rocketsRequested > 0 )
 	{
 		CG_DrawField ( 250, 260, 5, cg_local_rocketsRequested);
+		CG_DrawPic( 320, 260, ICON_SIZE, ICON_SIZE, cg_weapons[ WP_ROCKET_LAUNCHER ].ammoIcon );
 	}			
 	#endif
 }
