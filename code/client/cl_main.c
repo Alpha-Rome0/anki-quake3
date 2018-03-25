@@ -122,6 +122,8 @@ cvar_t	*cl_consoleKeys;
 
 cvar_t	*cl_rate;
 
+cvar_t  *cl_ankiHostPort;
+
 clientActive_t		cl;
 clientConnection_t	clc;
 clientStatic_t		cls;
@@ -3661,6 +3663,7 @@ void CL_Init( void ) {
 	cl_voipProtocol = Cvar_Get ("cl_voipProtocol", cl_voip->integer ? "opus" : "", CVAR_USERINFO | CVAR_ROM);
 #endif
 
+	cl_ankiHostPort = Cvar_Get( "cl_ankiHostPort", "127.0.0.1:27990", 0);
 
 	// cgame might not be initialized before menu is used
 	Cvar_Get ("cg_viewsize", "100", CVAR_ARCHIVE );
@@ -4653,12 +4656,17 @@ void CL_AnkiPublishReviewCount( int reviewCount )
 	Com_Printf("CL_AnkiPublishReviewCount\n");
 	memset(&adr, 0, sizeof(netadr_t));
 	
+	// retrieve the host/port that anki is running on
+	NET_StringToAdr( cl_ankiHostPort->string, &adr, NA_IP);
+	
+	/*
 	adr.type = NA_IP;
 	adr.ip[0] = 127;
 	adr.ip[1] = 0;
 	adr.ip[2] = 0;
 	adr.ip[3] = 1;
-	adr.port = htons(27997);
+	adr.port = htons(27999);
+	*/
 
 	Com_Printf("Sending to address %s\n", NET_AdrToStringwPort(adr));
 	

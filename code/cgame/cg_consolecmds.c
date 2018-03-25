@@ -407,6 +407,13 @@ static void CG_EditHud_f( void ) {
 
 #endif
 
+
+static void CG_PublishAnkiReviewCount( void )
+{
+	trap_CIN_Anki_ReviewCount( cg_local_ankiReviewsTodo );
+}
+
+
 static void CG_AnkiDecrement( void) {
 	
 	if( cg_local_ankiReviewsTodo > 0 )
@@ -470,6 +477,8 @@ static void CG_AnkiDecrement( void) {
 			cg_local_ankiReviewsDone -= cg_quadReviewCost.integer;			
 		}		
 		
+		CG_PublishAnkiReviewCount();
+		
 		if( cg_local_ankiReviewsTodo == 0 )
 		{
 			// play quad sound to notify player reviews are done
@@ -481,11 +490,6 @@ static void CG_AnkiDecrement( void) {
 		
 	}
 	
-}
-
-static void CG_PublishAnkiReviewCount( void )
-{
-	trap_CIN_Anki_ReviewCount( cg_local_ankiReviewsTodo );
 }
 
 
