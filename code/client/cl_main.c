@@ -4649,9 +4649,10 @@ void CL_ShowIP_f(void) {
 	Sys_ShowIP();
 }
 
-void CL_AnkiPublishReviewCount( int reviewCount ) 
+void CL_AnkiPublishReviewCount( int reviewTotal, int reviewDone ) 
 {
 	netadr_t adr;
+	int data[2];
 	
 	Com_Printf("CL_AnkiPublishReviewCount\n");
 	memset(&adr, 0, sizeof(netadr_t));
@@ -4659,18 +4660,12 @@ void CL_AnkiPublishReviewCount( int reviewCount )
 	// retrieve the host/port that anki is running on
 	NET_StringToAdr( cl_ankiHostPort->string, &adr, NA_IP);
 	
-	/*
-	adr.type = NA_IP;
-	adr.ip[0] = 127;
-	adr.ip[1] = 0;
-	adr.ip[2] = 0;
-	adr.ip[3] = 1;
-	adr.port = htons(27999);
-	*/
-
+	data[0] = reviewTotal;
+	data[1] = reviewDone;
+		
 	Com_Printf("Sending to address %s\n", NET_AdrToStringwPort(adr));
 	
-	NET_SendPacket( NS_CLIENT, 4, (void*) &reviewCount, adr );
+	NET_SendPacket( NS_CLIENT, 8, (void*) data, adr );
 }
 
 /*

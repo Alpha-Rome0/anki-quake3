@@ -694,7 +694,7 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		return re.inPVS( VMA(1), VMA(2) );
 
 	case CG_CIN_ANKI_REVIEWCOUNT:
-		CL_AnkiPublishReviewCount(args[1]);
+		CL_AnkiPublishReviewCount(args[1], args[2]);
 		return 0;
 		
 	default:

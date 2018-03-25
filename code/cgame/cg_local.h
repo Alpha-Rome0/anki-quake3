@@ -1199,6 +1199,7 @@ extern	vmCvar_t		cg_obeliskRespawnDelay;
 
 extern  int cg_local_ankiReviewsTodo;
 extern  int cg_local_ankiReviewsDone;
+extern  int cg_local_ankiReviewsSpent;
 extern  int cg_local_railSlugRequested;
 extern  int cg_local_rocketsRequested;
 extern  int cg_local_healthRequested;
@@ -1671,7 +1672,7 @@ void		trap_Key_SetCatcher( int catcher );
 int			trap_Key_GetKey( const char *binding );
 
 
-void trap_CIN_Anki_ReviewCount( int reviewCount );
+void trap_CIN_Anki_ReviewCount( int reviewTotal, int reviewDone );
 
 typedef enum {
   SYSTEM_PRINT,

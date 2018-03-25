@@ -49,7 +49,7 @@ ANKI_PORT = 27975
 
 
 g_review_count_target = -1
-g_review_count_done = 0
+g_review_count_done = -1
 
 
 ### constants related to progress bar
@@ -131,14 +131,9 @@ def server_loop():
 	
 	while True:
 		data, address = global_socket.recvfrom(1024)
-		number_received = struct.unpack("i", data)[0]
-		if number_received > g_review_count_target:
-			# update target, reset number of reviews done
-			g_review_count_target = number_received
-			g_review_count_done = 0
-		else:
-			# reviews are being done, set current count done
-			g_review_count_done = g_review_count_target - number_received 
+		unpacked = struct.unpack(b"ii", data)
+		g_review_count_target = unpacked[0]
+		g_review_count_done = unpacked[1]
 		
 	
 def start_up():

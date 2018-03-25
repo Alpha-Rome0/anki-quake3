@@ -410,7 +410,8 @@ static void CG_EditHud_f( void ) {
 
 static void CG_PublishAnkiReviewCount( void )
 {
-	trap_CIN_Anki_ReviewCount( cg_local_ankiReviewsTodo );
+	CG_Printf("Publishing ankiReviewsTodo: %d ankiReviewsDone: %d\n", cg_local_ankiReviewsTodo, cg_local_ankiReviewsDone );
+	trap_CIN_Anki_ReviewCount( cg_local_ankiReviewsTodo, cg_local_ankiReviewsDone );
 }
 
 
@@ -418,73 +419,76 @@ static void CG_AnkiDecrement( void) {
 	
 	if( cg_local_ankiReviewsTodo > 0 )
 	{
-		cg_local_ankiReviewsTodo--;
 		cg_local_ankiReviewsDone++;
+		cg_local_ankiReviewsSpent++;
 		
 		// play sound
 		CG_AddBufferedSound(cgs.media.ammoPickup);
 		
 		// do we review enough to credit some items ?
 		
-		if( cg_local_railSlugRequested > 0 && cg_local_ankiReviewsDone >= cg_railSlugReviewCost.integer )
+		if( cg_local_railSlugRequested > 0 && cg_local_ankiReviewsSpent >= cg_railSlugReviewCost.integer )
 		{
 			// credit some rail slugs
 			CG_Printf("Giving you Rail Slugs\n");
 			trap_SendConsoleCommand("give ammorail\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
 			cg_local_railSlugRequested--;
-			cg_local_ankiReviewsDone -= cg_railSlugReviewCost.integer;
+			cg_local_ankiReviewsSpent -= cg_railSlugReviewCost.integer;
 		}
 		
 		
-		if( cg_local_rocketsRequested > 0 && cg_local_ankiReviewsDone >= cg_rocketsReviewCost.integer )
+		if( cg_local_rocketsRequested > 0 && cg_local_ankiReviewsSpent >= cg_rocketsReviewCost.integer )
 		{
 			// credit some rail slugs
 			CG_Printf("Giving you Rockets\n");
 			trap_SendConsoleCommand("give ammorocket\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
 			cg_local_rocketsRequested--;
-			cg_local_ankiReviewsDone -= cg_rocketsReviewCost.integer;
+			cg_local_ankiReviewsSpent -= cg_rocketsReviewCost.integer;
 		}		
 	
-		if( cg_local_healthRequested ==  1 && cg_local_ankiReviewsDone >= cg_healthReviewCost.integer )
+		if( cg_local_healthRequested ==  1 && cg_local_ankiReviewsSpent >= cg_healthReviewCost.integer )
 		{
 			// credit health
 			CG_Printf("Giving you Health\n");
 			trap_SendConsoleCommand("give health\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
 			cg_local_healthRequested = 0;
-			cg_local_ankiReviewsDone -= cg_healthReviewCost.integer;			
+			cg_local_ankiReviewsSpent -= cg_healthReviewCost.integer;			
 		}		
 
-		if( cg_local_armorRequested ==  1 && cg_local_ankiReviewsDone >= cg_armorReviewCost.integer )
+		if( cg_local_armorRequested ==  1 && cg_local_ankiReviewsSpent >= cg_armorReviewCost.integer )
 		{
 			// credit armor
 			CG_Printf("Giving you Armor\n");
 			trap_SendConsoleCommand("give armor\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
 			cg_local_armorRequested = 0;
-			cg_local_ankiReviewsDone -= cg_armorReviewCost.integer;			
+			cg_local_ankiReviewsSpent -= cg_armorReviewCost.integer;			
 		}		
 		
-		if( cg_local_quadRequested ==  1 && cg_local_ankiReviewsDone >= cg_quadReviewCost.integer )
+		if( cg_local_quadRequested ==  1 && cg_local_ankiReviewsSpent >= cg_quadReviewCost.integer )
 		{
 			// credit quad
 			CG_Printf("Giving you quad\n");
 			trap_SendConsoleCommand("give quad damage\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
 			cg_local_quadRequested = 0;
-			cg_local_ankiReviewsDone -= cg_quadReviewCost.integer;			
+			cg_local_ankiReviewsSpent -= cg_quadReviewCost.integer;			
 		}		
 		
 		CG_PublishAnkiReviewCount();
 		
-		if( cg_local_ankiReviewsTodo == 0 )
+		if( cg_local_ankiReviewsDone >= cg_local_ankiReviewsTodo )
 		{
 			// play quad sound to notify player reviews are done
-			CG_AddBufferedSound(cgs.media.quadSound);			
-			// don't unpause bots, let user do it himself
-			//trap_SendConsoleCommand("bot_pause 0\n");
+			CG_AddBufferedSound(cgs.media.quadSound);		
+
+			// reset all counters
+			cg_local_ankiReviewsTodo = 0;
+			cg_local_ankiReviewsSpent = 0;
+			cg_local_ankiReviewsDone = 0;
 		}
 		
 		
@@ -493,22 +497,32 @@ static void CG_AnkiDecrement( void) {
 }
 
 
+static void CG_AnkiIncrementReviewCount( int additional )
+{
+	if( cg_local_ankiReviewsTodo == 0 )
+	{
+		// reviews todo was previously 0. starting a new study session
+		cg_local_ankiReviewsDone = 0;
+		cg_local_ankiReviewsSpent = 0;			
+	}
+	cg_local_ankiReviewsTodo += additional;
+	CG_PublishAnkiReviewCount();
+}
+
 static void CG_RequestRail( void ) {
 	CG_Printf("Requesting Rail Slugs\n");
 	cg_local_railSlugRequested++;
-	cg_local_ankiReviewsTodo += cg_railSlugReviewCost.integer;
+	CG_AnkiIncrementReviewCount(cg_railSlugReviewCost.integer);
 	CG_AddBufferedSound(cgs.media.menuBuzzSound);
 	trap_SendConsoleCommand("bot_pause 1\n");
-	CG_PublishAnkiReviewCount();
 }
 
 static void CG_RequestRockets( void ) {
 	CG_Printf("Requesting Rockets\n");
 	cg_local_rocketsRequested++;
-	cg_local_ankiReviewsTodo += cg_rocketsReviewCost.integer;
+	CG_AnkiIncrementReviewCount(cg_rocketsReviewCost.integer);
 	CG_AddBufferedSound(cgs.media.menuBuzzSound);
 	trap_SendConsoleCommand("bot_pause 1\n");
-	CG_PublishAnkiReviewCount();
 }
 
 static void CG_RequestHealth( void ) {
@@ -516,10 +530,9 @@ static void CG_RequestHealth( void ) {
 	{
 		CG_Printf("Requesting Health\n");
 		cg_local_healthRequested = 1;
-		cg_local_ankiReviewsTodo += cg_healthReviewCost.integer;
+		CG_AnkiIncrementReviewCount(cg_healthReviewCost.integer);
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1\n");
-		CG_PublishAnkiReviewCount();
 	}
 }
 
@@ -528,10 +541,9 @@ static void CG_RequestArmor( void ) {
 	{
 		CG_Printf("Requesting Armor\n");
 		cg_local_armorRequested = 1;
-		cg_local_ankiReviewsTodo += cg_armorReviewCost.integer;
+		CG_AnkiIncrementReviewCount(cg_armorReviewCost.integer);
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1\n");
-		CG_PublishAnkiReviewCount();
 	}
 }
 
@@ -540,10 +552,9 @@ static void CG_RequestQuad( void ) {
 	{
 		CG_Printf("Requesting Quad\n");
 		cg_local_quadRequested = 1;
-		cg_local_ankiReviewsTodo += cg_quadReviewCost.integer;
+		CG_AnkiIncrementReviewCount(cg_quadReviewCost.integer);
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1\n");
-		CG_PublishAnkiReviewCount();
 	}
 }
 

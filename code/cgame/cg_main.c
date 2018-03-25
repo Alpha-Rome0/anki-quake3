@@ -211,6 +211,7 @@ vmCvar_t cg_quadReviewCost;
 
 int cg_local_ankiReviewsTodo;
 int cg_local_ankiReviewsDone;
+int cg_local_ankiReviewsSpent;
 
 int cg_local_railSlugRequested;
 int cg_local_rocketsRequested;
@@ -1890,6 +1891,7 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 
 	cg_local_ankiReviewsTodo = 0;
 	cg_local_ankiReviewsDone = 0;
+	cg_local_ankiReviewsSpent = 0;	
 	cg_local_railSlugRequested = 0;
 	cg_local_rocketsRequested = 0;
 	cg_local_healthRequested = 0;
