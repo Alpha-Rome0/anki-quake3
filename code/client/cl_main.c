@@ -4649,8 +4649,6 @@ void CL_ShowIP_f(void) {
 void CL_AnkiPublishReviewCount( int reviewCount ) 
 {
 	netadr_t adr;
-	int data;
-	
 	
 	Com_Printf("CL_AnkiPublishReviewCount\n");
 	memset(&adr, 0, sizeof(netadr_t));
@@ -4662,13 +4660,9 @@ void CL_AnkiPublishReviewCount( int reviewCount )
 	adr.ip[3] = 1;
 	adr.port = htons(27997);
 
-	Com_Printf("Sending to address %s\n", NET_AdrToStringwPort(adr) );
+	Com_Printf("Sending to address %s\n", NET_AdrToStringwPort(adr));
 	
-	data = reviewCount;
-	// Sys_SendPacket( 4, (void*) & data, adr );
-	
-	// Sys_SendPacket( 5, (void*) "test\n", adr );
-	NET_SendPacket( NS_CLIENT, 5, (void*) "test\n", adr );
+	NET_SendPacket( NS_CLIENT, 4, (void*) &reviewCount, adr );
 }
 
 /*
