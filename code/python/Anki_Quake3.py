@@ -11,6 +11,7 @@ from anki import version as anki_version
 from aqt.qt import *
 from aqt import mw
 from aqt.utils import tooltip
+from aqt.reviewer import Reviewer
 
 import socket
 from threading import Thread
@@ -95,8 +96,31 @@ def start_up():
 	thread = Thread(target = server_loop)
 	thread.daemon = True
 	thread.start()		
+	
+def keyHandler(self, evt, _old):
+    key = unicode(evt.text())
+    if key == "z":
+        try:# throws an error on undo -> do -> undo pattern,  otherwise works fine
+            mw.onUndo()
+        except:
+            pass
+    elif key in ["q", "e",]: # allow answering with a and d keys, to keep fingers on WASD
+        cnt = mw.col.sched.answerButtons(mw.reviewer.card) # Get button count
+        isq = self.state == "question"
+        if isq:
+            self._showAnswerHack()
+        if key == "q":
+            self._answerCard(1)
+        elif key == "e":
+            self._answerCard(cnt)
+        else:
+            return _old(self, evt)
+    else:
+        return _old(self, evt)	
 
 addHook("showAnswer", cardReview)	
 addHook("profileLoaded", start_up)
+
+Reviewer._keyHandler = wrap(Reviewer._keyHandler, keyHandler, "around")
 		
 

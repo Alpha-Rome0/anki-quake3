@@ -508,6 +508,7 @@ static void CG_RequestRockets( void ) {
 	cg_local_ankiReviewsTodo += cg_rocketsReviewCost.integer;
 	CG_AddBufferedSound(cgs.media.menuBuzzSound);
 	trap_SendConsoleCommand("bot_pause 1\n");
+	CG_PublishAnkiReviewCount();
 }
 
 static void CG_RequestHealth( void ) {
@@ -518,6 +519,7 @@ static void CG_RequestHealth( void ) {
 		cg_local_ankiReviewsTodo += cg_healthReviewCost.integer;
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1\n");
+		CG_PublishAnkiReviewCount();
 	}
 }
 
@@ -529,6 +531,7 @@ static void CG_RequestArmor( void ) {
 		cg_local_ankiReviewsTodo += cg_armorReviewCost.integer;
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1\n");
+		CG_PublishAnkiReviewCount();
 	}
 }
 
@@ -540,6 +543,7 @@ static void CG_RequestQuad( void ) {
 		cg_local_ankiReviewsTodo += cg_quadReviewCost.integer;
 		CG_AddBufferedSound(cgs.media.menuBuzzSound);
 		trap_SendConsoleCommand("bot_pause 1\n");
+		CG_PublishAnkiReviewCount();
 	}
 }
 
