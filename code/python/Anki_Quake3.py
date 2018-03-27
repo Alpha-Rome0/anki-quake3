@@ -64,22 +64,6 @@ g_pb_notifier = None
 ### constants related to progress bar
 ### ---------------------------------
 
-# Which queues to include in the progress calculation (all True by default)
-includeNew = True
-includeRev = True
-includeLrn = True
-
-# Only include new cards once reviews are exhausted.
-includeNewAfterRevs = True
-
-# Limit count to your review settings as opposed to deck overall
-limitToReviewSettings = True
-
-# PROGRESS BAR APPEARANCE
-
-showPercent = False # Show the progress text percentage or not.
-showNumber = True # Show the progress text as a fraction
-
 qtxt = "#f1ced1" # Percentage color, if text visible.
 qbg = "#7d2029" # Background color of progress bar.
 qfg = "#91131f" # Foreground color of progress bar.
@@ -98,6 +82,7 @@ dockArea = Qt.TopDockWidgetArea # Shows bar at the top. Use with horizontal orie
 __version__ = '0.1'
 
 class ProgressBarNotifier(PyQt4.QtCore.QObject):
+    """Used to communicate between UDP socket thread and PyQT progress bar"""
     
     def __init__(self, update_function):
        PyQt4.QtCore.QObject.__init__(self) # initialisation required for object inheritance
@@ -108,6 +93,7 @@ class ProgressBarNotifier(PyQt4.QtCore.QObject):
 
 
 def getPacketData():
+    """this is the data we send to quake3 indicating we've done a review"""
     return 'FFFFFFFF'.decode('hex') + b'anki_review'
 
 def cardReview():
@@ -171,11 +157,11 @@ def keyHandler(self, evt, _old):
         cnt = mw.col.sched.answerButtons(mw.reviewer.card) # Get button count
         isq = self.state == "question"
         if isq:
-            self._showAnswerHack()
+            return self._showAnswer()
         if key == "q":
-            self._answerCard(1)
+            return self._answerCard(1)
         elif key == "e":
-            self._answerCard(cnt)
+            return self._answerCard(cnt)
         else:
             return _old(self, evt)
     else:
