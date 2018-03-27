@@ -108,53 +108,58 @@ class ProgressBarNotifier(PyQt4.QtCore.QObject):
 
 
 def getPacketData():
-	return 'FFFFFFFF'.decode('hex') + b'anki_review'
+    return 'FFFFFFFF'.decode('hex') + b'anki_review'
 
 def cardReview():
-	global global_review_count
+    # enter the data content of the UDP packet as hex
+    PACKETDATA = getPacketData()
+    # initialize a socket, think of it as a cable
+    # SOCK_DGRAM specifies that this is UDP
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
+    # connect the socket, think of it as connecting the cable to the address location
+    s.connect((QUAKE3_IP, QUAKE3_PORT))
+    # send the command
+    s.send(PACKETDATA)
+    # close the socket
+    s.close()
 
-	# enter the data content of the UDP packet as hex
-	PACKETDATA = getPacketData()
-	# initialize a socket, think of it as a cable
-	# SOCK_DGRAM specifies that this is UDP
-	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
-	# connect the socket, think of it as connecting the cable to the address location
-	s.connect((QUAKE3_IP, QUAKE3_PORT))
-	# send the command
-	s.send(PACKETDATA)
-	# close the socket
-	s.close()
-
-	
+    
 def server_loop():
-	global g_review_count_target
-	global g_review_count_done
-	global g_pb_notifier
+    global g_review_count_target
+    global g_review_count_done
+    global g_pb_notifier
 
-	try:
-		# Create a TCP/IP socket
-		global_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # Create a TCP/IP socket
+        global_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-		# Bind the socket to the port
-		server_address = (ANKI_IP, ANKI_PORT)
-		global_socket.bind(server_address)	
-	except socket.error as e:
-		print >> sys.stderr, 'failed to bind to socket:', e
+        # Bind the socket to the port
+        server_address = (ANKI_IP, ANKI_PORT)
+        global_socket.bind(server_address)    
+    except socket.error as e:
+        print >> sys.stderr, 'failed to bind to socket:', e
         
-	
-	while True:
-		data, address = global_socket.recvfrom(1024)
-		unpacked = struct.unpack(b"ii", data)
-		g_review_count_target = unpacked[0]
-		g_review_count_done = unpacked[1]
-		g_pb_notifier.signal_update()
-		
-	
+    
+    while True:
+        data, address = global_socket.recvfrom(1024)
+        unpacked = struct.unpack(b"ii", data)
+        g_review_count_target = unpacked[0]
+        g_review_count_done = unpacked[1]
+        g_pb_notifier.signal_update()
+        
+    
 def start_up():
-	thread = Thread(target = server_loop)
-	thread.daemon = True
-	thread.start()		
-	
+    thread = Thread(target = server_loop)
+    thread.daemon = True
+    thread.start()        
+    
+
+
+def answerCard(self, ease, _old):
+    cardReview()
+    return _old(self, ease)
+    
+
 def keyHandler(self, evt, _old):
     key = unicode(evt.text())
     if key == "z":
@@ -174,8 +179,8 @@ def keyHandler(self, evt, _old):
         else:
             return _old(self, evt)
     else:
-        return _old(self, evt)	
-		
+        return _old(self, evt)    
+        
 ## Set up variables for progress bar
 
 failed = 0
@@ -234,8 +239,8 @@ def _dock(pb):
     mw.web.setFocus()
     return dock
 
-	
-def create_progressbar():	
+    
+def create_progressbar():    
     """Initialize and set parameters for progress bar, adding it to the dock."""
 
     global g_pb_notifier
@@ -245,7 +250,7 @@ def create_progressbar():
     progressBar = QProgressBar()
     progressBar.setTextVisible(True)
     progressBar.setValue(0)
-    progressBar.setFormat("Quake III Anki - Waiting for connection")	
+    progressBar.setFormat("Quake III Anki - Waiting for connection")    
     progressBar.setOrientation(orientationHV)
     if pbdStyle == None:
         progressBar.setStyleSheet(
@@ -270,35 +275,37 @@ def create_progressbar():
         progressBar.setPalette(palette)
     _dock(progressBar)
     return progressBar
-	
+    
 def setup_progressbar():
-	global progressBar
-	progressBar = create_progressbar()
+    global progressBar
+    progressBar = create_progressbar()
 
 def update_progressbar():
     """Update progress bar; hiding/showing prevents flashing bug."""
     global mx
     if progressBar:
-	
-		if g_review_count_target == -1:
-			# didn't get target review count from quake3
-			progressBar.setValue(0)
-			progressBar.setFormat("Quake III not connected")
-		else:
-			progressBar.setRange(0, g_review_count_target)
-			progressBar.setValue(g_review_count_done)
-			if g_review_count_done < g_review_count_target:
-				progressBar.setFormat("Quake III %d / %d" % (g_review_count_done, g_review_count_target))
-			else:
-				progressBar.setFormat("Quake III all reviews done")
-		
+    
+        if g_review_count_target == -1:
+            # didn't get target review count from quake3
+            progressBar.setValue(0)
+            progressBar.setFormat("Quake III not connected")
+        else:
+            progressBar.setRange(0, g_review_count_target)
+            progressBar.setValue(g_review_count_done)
+            if g_review_count_done < g_review_count_target:
+                progressBar.setFormat("Quake III %d / %d" % (g_review_count_done, g_review_count_target))
+            else:
+                progressBar.setFormat("Quake III all reviews done")
+        
 
 
-addHook("showAnswer", cardReview)	
+#addHook("showAnswer", cardReview)
 addHook("profileLoaded", start_up)
 addHook("profileLoaded", setup_progressbar)
 addHook("showQuestion", update_progressbar)
 
+Reviewer._answerCard = wrap(Reviewer._answerCard, answerCard, "around")
 Reviewer._keyHandler = wrap(Reviewer._keyHandler, keyHandler, "around")
-		
+
+        
 
