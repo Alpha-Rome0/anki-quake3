@@ -22,6 +22,8 @@ from aqt import mw
 from aqt.utils import tooltip
 from aqt.reviewer import Reviewer
 
+import PyQt4.QtCore
+
 import socket
 from threading import Thread
 import struct
@@ -29,6 +31,12 @@ import struct
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
+### quake command line
+
+# ioquake3.x86_64.exe +set sv_pure 0 +set vm_cgame 0 +set vm_game 0 +set vm_ui 0
+# building
+# make ARCH=x86_64
 
 ### configuration section for AnkiQuake3
 ### ====================================
@@ -51,6 +59,7 @@ ANKI_PORT = 27975
 g_review_count_target = -1
 g_review_count_done = -1
 
+g_pb_notifier = None
 
 ### constants related to progress bar
 ### ---------------------------------
@@ -88,6 +97,14 @@ dockArea = Qt.TopDockWidgetArea # Shows bar at the top. Use with horizontal orie
 
 __version__ = '0.1'
 
+class ProgressBarNotifier(PyQt4.QtCore.QObject):
+    
+    def __init__(self, update_function):
+       PyQt4.QtCore.QObject.__init__(self) # initialisation required for object inheritance
+       PyQt4.QtCore.QObject.connect(self, PyQt4.QtCore.SIGNAL('review_count_update'), update_function)
+
+    def signal_update(self):
+       self.emit(PyQt4.QtCore.SIGNAL('review_count_update'))
 
 
 def getPacketData():
@@ -112,6 +129,7 @@ def cardReview():
 def server_loop():
 	global g_review_count_target
 	global g_review_count_done
+	global g_pb_notifier
 
 	try:
 		# Create a TCP/IP socket
@@ -129,7 +147,7 @@ def server_loop():
 		unpacked = struct.unpack(b"ii", data)
 		g_review_count_target = unpacked[0]
 		g_review_count_done = unpacked[1]
-		#update_progressbar()
+		g_pb_notifier.signal_update()
 		
 	
 def start_up():
@@ -216,9 +234,14 @@ def _dock(pb):
     mw.web.setFocus()
     return dock
 
-
+	
 def create_progressbar():	
     """Initialize and set parameters for progress bar, adding it to the dock."""
+
+    global g_pb_notifier
+
+    g_pb_notifier = ProgressBarNotifier(update_progressbar)
+
     progressBar = QProgressBar()
     progressBar.setTextVisible(True)
     progressBar.setValue(0)
