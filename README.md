@@ -25,7 +25,7 @@ in conjunction with the Anki flashcard software package (https://apps.ankiweb.ne
 
 
 ## Setup
-* Download current release https://github.com/lucwastiaux/anki-quake3/blob/master/releases/anki-quake3-2018-04-08.zip (Windows 64bit)
+* Download current release https://github.com/lucwastiaux/anki-quake3/raw/master/releases/anki-quake3-2018-04-08.zip (Windows 64bit)
 * Unzip
 * copy all *.pk3 files from your Steam install (C:\Program Files (x86)\Steam\steamapps\common\Quake 3 Arena\baseq3) into anki-quake3/baseq3
 * Launch the game once so that it'll create a user profile (start ioquake3.x86_64.exe), but exit right away as we need to do some more setup
