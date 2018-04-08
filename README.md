@@ -12,7 +12,7 @@ in conjunction with the Anki flashcard software package (https://apps.ankiweb.ne
 * You can then alt-tab into Anki, which has been notified of your target review count.
 * Perform all your reviews in Anki. You will hear audio feedback from Quake3 as you perform your reviews and earn items. You will also hear a sound when all your reviews are done. You can then alt-tab into Quake3 and resume playing.
 
-![Anki Quake 3 screenshot]()
+![Anki Quake 3 screenshot](https://raw.githubusercontent.com/lucwastiaux/anki-quake3/master/screenshots/anki_quake3.jpg)
 
 ## Limitations
 * The only items/weapons supported currently are:
