@@ -25,3 +25,18 @@ in conjunction with the Anki flashcard software package (https://apps.ankiweb.ne
 
 
 ## Setup
+* Download current release https://github.com/lucwastiaux/anki-quake3/blob/master/releases/anki-quake3-2018-04-08.zip (Windows 64bit)
+* Unzip
+* copy all *.pk3 files from your Steam install (C:\Program Files (x86)\Steam\steamapps\common\Quake 3 Arena\baseq3) into anki-quake3/baseq3
+* Launch the game once so that it'll create a user profile (start ioquake3.x86_64.exe), but exit right away as we need to do some more setup
+* After exiting, open windows explorer and paste this path: 
+* Open *q3config.cfg* in a text editor, and add the following lines at the bottom
+   * **bind e "toggle bot_pause"**
+   * **bind r "request_rail"**
+   * **bind t "request_rockets"**
+   * **bind f "request_health"**
+   * **bind g "request_armor"**
+   * **bind q "anki_decrement"**
+
+# Optional setup
+seta cl_ankiHostPort "127.0.0.1:27975"
