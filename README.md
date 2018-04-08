@@ -15,10 +15,13 @@ in conjunction with the Anki flashcard software package (https://apps.ankiweb.ne
 ![Anki Quake 3 screenshot](https://raw.githubusercontent.com/lucwastiaux/anki-quake3/master/screenshots/anki_quake3.jpg)
 
 ## Limitations
+* You must own a copy of Quake 3 Arena (http://store.steampowered.com/app/2200/Quake_III_Arena/)
 * The only items/weapons supported currently are:
-** Railgun (damage changed to 200 instead of default 100)
-** Rocket Launcher
-** Armor
-** Health
+   * Railgun (damage changed to 200 instead of default 100)
+   * Rocket Launcher
+   * Armor
+   * Health
 * Only windows is supported.
 
+
+## Setup
