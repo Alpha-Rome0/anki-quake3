@@ -3663,7 +3663,7 @@ void CL_Init( void ) {
 	cl_voipProtocol = Cvar_Get ("cl_voipProtocol", cl_voip->integer ? "opus" : "", CVAR_USERINFO | CVAR_ROM);
 #endif
 
-	cl_ankiHostPort = Cvar_Get( "cl_ankiHostPort", "127.0.0.1:27990", 0);
+	cl_ankiHostPort = Cvar_Get( "cl_ankiHostPort", "127.0.0.1:27975", 0);
 
 	// cgame might not be initialized before menu is used
 	Cvar_Get ("cg_viewsize", "100", CVAR_ARCHIVE );
