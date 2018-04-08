@@ -29,8 +29,8 @@ in conjunction with the Anki flashcard software package (https://apps.ankiweb.ne
 * Unzip
 * copy all *.pk3 files from your Steam install (C:\Program Files (x86)\Steam\steamapps\common\Quake 3 Arena\baseq3) into anki-quake3/baseq3
 * Launch the game once so that it'll create a user profile (start ioquake3.x86_64.exe), but exit right away as we need to do some more setup
-* After exiting, open windows explorer and paste this path: 
-* Open *q3config.cfg** in a text editor, and add the following lines at the bottom (you can change the key bindings)
+* After exiting, open windows explorer and paste this path: **%APPDATA%/Quake3/baseq3**
+* Open **q3config.cfg** in a text editor, and add the following lines at the bottom (you can change the key bindings)
    * **bind e "toggle bot_pause"**  *//this will toggle the bot pause mode, use this to restart the game after reviews*
    * **bind r "request_rail"** *//this requests rail slugs, and starts review mode (pauses bots). You can press it multiple times*
    * **bind t "request_rockets"** *//this requests rockets, and starts review mode (pauses bots)*
