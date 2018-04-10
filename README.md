@@ -22,6 +22,7 @@ in conjunction with the Anki flashcard software package (https://apps.ankiweb.ne
    * Armor
    * Health
 * Only windows is supported.
+* If you pause the bots for more than 15mn, they may timeout and disconnect. Similarly, if you pause the bots right away after joining a game (such as when requesting ammo right after connecting), they may never fully connect. I haven't fully sorted out this issue yet.
 
 
 ## Setup
