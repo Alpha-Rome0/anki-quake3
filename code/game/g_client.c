@@ -1057,6 +1057,8 @@ void ClientSpawn(gentity_t *ent) {
 	int		accuracy_hits, accuracy_shots;
 	int		eventSequence;
 	char	userinfo[MAX_INFO_STRING];
+	int     rockets;
+	int     slugs;
 
 	index = ent - g_entities;
 	client = ent->client;
@@ -1116,6 +1118,8 @@ void ClientSpawn(gentity_t *ent) {
 		persistant[i] = client->ps.persistant[i];
 	}
 	eventSequence = client->ps.eventSequence;
+	slugs = client->ps.ammo[WP_RAILGUN]; 	
+	rockets = client->ps.ammo[WP_ROCKET_LAUNCHER]; 
 
 	Com_Memset (client, 0, sizeof(*client));
 
@@ -1175,13 +1179,12 @@ void ClientSpawn(gentity_t *ent) {
 	client->ps.ammo[WP_GAUNTLET] = -1;
 	client->ps.ammo[WP_GRAPPLING_HOOK] = -1;
 
-	// if the player is a human, he only gets a railgun and 5 slugs
+	// if the player is a human give railgun and rocket launcher and restore ammo
 	if( ( ent->r.svFlags & SVF_BOT ) == 0)
 	{
 		client->ps.stats[STAT_WEAPONS] = (1 << WP_RAILGUN | 1 << WP_ROCKET_LAUNCHER ); 
-		// don't give player any ammo to begin with
-		//client->ps.ammo[WP_RAILGUN] = 5; 	
-		//client->ps.ammo[WP_ROCKET_LAUNCHER] = 10; 
+		client->ps.ammo[WP_RAILGUN] = slugs; 	
+		client->ps.ammo[WP_ROCKET_LAUNCHER] = rockets; 
 	}
 	
 	// health will count down towards max_health

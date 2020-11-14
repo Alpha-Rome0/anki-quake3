@@ -422,9 +422,6 @@ static void CG_AnkiDecrement( void) {
 		cg_local_ankiReviewsDone++;
 		cg_local_ankiReviewsSpent++;
 		
-		// play sound
-		CG_AddBufferedSound(cgs.media.ammoPickup);
-		
 		// do we review enough to credit some items ?
 		
 		if( cg_local_railSlugRequested > 0 && cg_local_ankiReviewsSpent >= cg_railSlugReviewCost.integer )
@@ -472,7 +469,7 @@ static void CG_AnkiDecrement( void) {
 		{
 			// credit quad
 			CG_Printf("Giving you quad\n");
-			trap_SendConsoleCommand("give quad damage\n");
+			trap_SendConsoleCommand("give quad\n");
 			CG_AddBufferedSound(cgs.media.weaponPickup);
 			cg_local_quadRequested = 0;
 			cg_local_ankiReviewsSpent -= cg_quadReviewCost.integer;			
