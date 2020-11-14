@@ -432,7 +432,7 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 	if (other->health < 1)
 		return;		// dead people can't pickup
 	
-	if( ( other->r.svFlags & SVF_BOT ) == 0)
+	if( ( other->r.svFlags & SVF_BOT ) == 0 && ent->item->giType != IT_TEAM)
 	{
 		// human player cannot pick up any items
 		return;
