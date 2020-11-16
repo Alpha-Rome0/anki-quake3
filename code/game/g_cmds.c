@@ -277,7 +277,7 @@ void Cmd_Give_f (gentity_t *ent)
 
 	if (Q_stricmp(name, "ammorail") == 0)
 	{
-		ent->client->ps.ammo[WP_RAILGUN] += 5;
+		ent->client->ps.ammo[WP_RAILGUN] += 10;
 		return;
 	}
 	

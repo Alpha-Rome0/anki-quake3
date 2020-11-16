@@ -202,7 +202,6 @@ CG_DrawField
 Draws large numbers for status bar and powerups
 ==============
 */
-#ifndef MISSIONPACK
 static void CG_DrawField (int x, int y, int width, int value) {
 	char	num[16], *ptr;
 	int		l;
@@ -256,7 +255,6 @@ static void CG_DrawField (int x, int y, int width, int value) {
 		l--;
 	}
 }
-#endif // MISSIONPACK
 
 /*
 ================
@@ -2313,7 +2311,6 @@ CG_DrawAnkiCountdown
 static void CG_DrawAnkiCountdown( void ) {
 	int w;
 
-	#ifndef MISSIONPACK	
 	if( cg_local_ankiReviewsTodo > 0 )
 	{
 		CG_DrawField ( 160, 150, 5, cg_local_ankiReviewsTodo);
@@ -2338,7 +2335,6 @@ static void CG_DrawAnkiCountdown( void ) {
 	{
 		CG_DrawPic( 340, 320, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
 	}
-	#endif
 }
 
 #ifdef MISSIONPACK

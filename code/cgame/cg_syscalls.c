@@ -448,5 +448,6 @@ qboolean trap_R_inPVS( const vec3_t p1, const vec3_t p2 ) {
 }
 
 void trap_CIN_Anki_ReviewCount (int reviewTotal, int reviewDone ) { 
+	CG_Printf("making syscall...");
 	syscall( CG_CIN_ANKI_REVIEWCOUNT, reviewTotal, reviewDone );
 }

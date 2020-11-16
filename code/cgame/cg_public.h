@@ -184,7 +184,7 @@ typedef enum {
 	CG_TESTPRINTFLOAT,
 	CG_ACOS,
 	
-	CG_CIN_ANKI_REVIEWCOUNT
+	CG_CIN_ANKI_REVIEWCOUNT = 599
 } cgameImport_t;
 
 
