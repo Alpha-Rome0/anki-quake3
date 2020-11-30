@@ -253,7 +253,7 @@ void Cmd_Give_f (gentity_t *ent)
 
 	if (give_all || Q_stricmp( name, "health") == 0)
 	{
-		ent->health = ent->client->ps.stats[STAT_MAX_HEALTH];
+		ent->health = MIN(ent->client->ps.stats[STAT_MAX_HEALTH], ent->health + 20);
 		if (!give_all)
 			return;
 	}

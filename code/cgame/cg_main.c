@@ -345,7 +345,7 @@ static cvarTable_t cvarTable[] = {
 
 	{ &cg_railSlugReviewCost, "cg_railSlugReviewCost", "5", 0},
 	{ &cg_rocketsReviewCost, "cg_rocketsReviewCost", "5", 0},
-	{ &cg_healthReviewCost, "cg_healthReviewCost", "5", 0},
+	{ &cg_healthReviewCost, "cg_healthReviewCost", "1", 0},
 	{ &cg_armorReviewCost, "cg_armorReviewCost", "5", 0},
 	{ &cg_quadReviewCost, "cg_quadReviewCost", "20", 0},
 	
