@@ -1,3 +1,8 @@
+# Updates
+* added Team Arena support
+* added CTF support
+* added support for Powerup pickups
+
 # Anki Quake 3
 
 This project is a fork of IOQuake3 (http://ioquake3.org) designed for learning gamification
