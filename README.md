@@ -2,6 +2,7 @@
 * added Team Arena support
 * added CTF support
 * added support for Powerup pickups
+* You now keep your hard earned ammo when respawning.
 
 # Anki Quake 3
 
