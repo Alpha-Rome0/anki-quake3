@@ -4,6 +4,10 @@
 * added support for Powerup pickups
 * You now keep your hard earned ammo when respawning.
 
+# Installation
+1. Download this source and build it. Instructions here: http://wiki.ioquake3.org/Building_ioquake3
+2. Follow instructions below skipping the first 2 steps.
+
 # Anki Quake 3
 
 This project is a fork of IOQuake3 (http://ioquake3.org) designed for learning gamification
